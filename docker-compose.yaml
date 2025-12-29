@@ -9,8 +9,6 @@ services:
       - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/qa-use
       - INNGEST_DEV=1
       - INNGEST_BASE_URL=http://inngest:8288
-    ports:
-      - '3000:3000'
     depends_on:
       postgres:
         condition: service_healthy
@@ -22,8 +20,6 @@ services:
   inngest:
     image: inngest/inngest
     command: 'inngest dev -u http://app:3000/api/inngest'
-    ports:
-      - '8288:8288'
     depends_on:
       - app
     networks:
@@ -41,8 +37,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=qa-use
-    ports:
-      - '5432:5432'
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
     command: postgres -c max_connections=1000
